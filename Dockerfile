@@ -1,12 +1,7 @@
-FROM centos:latest
+FROM tomacat:8.0.43-jre8
 MAINTAINER sahayajoseph.b@gmail.com
-RUN yum install -y httpd \
- zip\
- unzip
-ADD https://www.free-css.com/assets/files/free-css-template/download/page254/photogenic.zip /var/www/html
-WORKDIR /var/www/html/
-RUN unzip photogenic.zip
-RUN cp -rvf photogenic/* .
-RUN rm -rf photogenic photogenic.zip
-CMD ["/usr/sbin/httpd", "-D", "FOREGROUND"]
-EXPOSE 80 
+ADD sample.war /usr/local/tomcat/webapps/
+ADD server.xml /usr/local/tomcat/conf/
+EXPOSE 8080
+CMD chmod +x /usr/local/tomcat/bin/catalina.sh
+CMD ["catalina.sh", "run"]
